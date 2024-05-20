@@ -40,11 +40,11 @@ def generate_month(month, start_day):
     month_len = month_lengths[month_idx]
     day = start_day
 
-    for weekday in fetch_weekday():
+    for type, weekday in fetch_weekday():
         if day > month_len:
             break
 
-        ret.append((weekday, day))
+        ret.append((type, weekday, day))
 
         day += 1
 
@@ -117,11 +117,11 @@ def create_worksheet(month_name, day_pack):
 
     curr_format = no_format
 
-    for day, number in day_pack:
+    for type, day, number in day_pack:
         # select format based on the day type
-        if day[0] == REHEARSAL:
+        if type == REHEARSAL:
             curr_format = rehearsals
-        elif day[0] == WEEKEND:
+        elif type == WEEKEND:
             curr_format = weekends
         else:
             # alternating between styles for better orientation
@@ -132,7 +132,7 @@ def create_worksheet(month_name, day_pack):
             format_row += 1
 
         # writing the day info
-        ws.write(curr_row, 0, day[1] + ' ' + str(number) + '.', curr_format)    # write day and date into the first column
+        ws.write(curr_row, 0, day + ' ' + str(number) + '.', curr_format)    # write day and date into the first column
         ws.write(curr_row, 6, prepare_if_statement(curr_row + 1), curr_format)  # write command statement into the last column
 
         # filling the rest of the row with empty data to apply the format
