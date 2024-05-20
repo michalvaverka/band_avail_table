@@ -60,19 +60,6 @@ def generate_days(start_day, start_month) -> list[list[str]]:
 
     return ret
 
-
-def generate_table_month(days, month):
-    month_idx = month - 1
-
-    month_name = month_names[month_idx]
-
-    print(month_name)
-
-    for day in days:
-        print('Here, append to the xlsx') # How do I know the month? Hard coded I'd presume
-        print(day)
-
-
 # XLSX Helper functions
 wb = xlsxwriter.Workbook('Availability Table.xlsx') # create new workbook
 
