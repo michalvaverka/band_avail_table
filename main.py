@@ -5,12 +5,11 @@ weekdays = ["Pondělí", "Úterý", "Středa", "Čtvrtek", "Pátek", "Sobota", "
 month_lengths = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 month_names = ["Leden", "Únor", "Březen", "Duben", "Květen", "Červen", "Červenec", "Srpen", "Září", "Říjen", "Listopad", "Prosinec"]
 
-band_members = ["Evča", "Mari", "Michal", "Petr", "Štěpán", "Všichni"]
+band_members = ["Evča", "Mari", "Michal", "Péťa", "Štěpán", "Všichni"]
 
 REHEARSAL = 2
 WEEKEND = 1
 OTHER = 0
-# barevne vyznacene vikendy a uterky
 
 # Returns day of the week using generator => Starting Monday and is in Czech
 def fetch_weekday():
@@ -28,8 +27,8 @@ def fetch_weekday():
         if fetch_weekday.fetch_idx >= 7:
             fetch_weekday.fetch_idx = 0
 
-fetch_weekday.fetch_idx = 0
-        
+fetch_weekday.fetch_idx = 0 
+
 def generate_month(month, start_day):
     ret = []
 
