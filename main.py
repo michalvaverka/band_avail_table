@@ -106,30 +106,38 @@ def prepare_if_statement(row_num):
 
 # create a single worksheet, the logic is to have a single worksheet per month
 def create_worksheet(month_name, day_pack):
+    def add_band_members(ws):
+        for i in range(1, 7):
+            ws.write(0, i, band_members[i-1], names)
+    
+    def get_format(type, format_row):
+        ret = no_format
+        
+        if type == REHEARSAL:
+            ret = rehearsals
+        elif type == WEEKEND:
+            ret = weekends
+        else:
+            # alternating between styles for better orientation
+            if format_row % 2 == 0:
+                ret = row_even
+            else:
+                ret = row_even # to enable row format alternating, switch this to row_odd
+            format_row += 1
+        
+        return ret
+    
     ws = wb.add_worksheet(month_name)
 
     # filling in band member's names
-    for i in range(1, 7):
-        ws.write(0, i, band_members[i-1], names)
+    add_band_members(ws)
 
     curr_row = 1
     format_row = 1
 
-    curr_format = no_format
-
     for type, day, number in day_pack:
         # select format based on the day type
-        if type == REHEARSAL:
-            curr_format = rehearsals
-        elif type == WEEKEND:
-            curr_format = weekends
-        else:
-            # alternating between styles for better orientation
-            if format_row % 2 == 0:
-                curr_format = row_even
-            else:
-                curr_format = row_even # to enable row format alternating, switch this to row_odd
-            format_row += 1
+        curr_format = get_format(type, format_row)
 
         # writing the day info
         ws.write(curr_row, 0, day + ' ' + str(number) + '.', curr_format)    # write day and date into the first column
