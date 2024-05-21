@@ -60,7 +60,7 @@ def generate_days(start_day, start_month) -> list[list[str]]:
 
     return ret
 
-# XLSX Helper functions
+# XLSX related functions and global variables (bad practice, but doesn't matter for a small private script)
 wb = xlsxwriter.Workbook('Availability Table.xlsx') # create new workbook
 
 # for everything
