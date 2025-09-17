@@ -1,12 +1,12 @@
 import xlsxwriter
-import definitions
+import config
 from string import ascii_uppercase
 
 class ExcelGen:
-    def __init__(self, filename):
+    def __init__(self):
         
         # Create a workbook
-        self.workbook = xlsxwriter.Workbook(filename)
+        self.workbook = xlsxwriter.Workbook(config.FILENAME)
 
         # Define all the formats
         self.fmt_classic = self.workbook.add_format()
@@ -63,13 +63,13 @@ class ExcelGen:
         ret = '=IF('
         end = ', "MOŽME", "Nemožme :(")'
         
-        for char in ascii_uppercase[1:len(definitions.people)]:             # A is for days, so skip it 
-            if ascii_uppercase.index(char) == len(definitions.people) - 1:  # Last person, must be without AND
+        for char in ascii_uppercase[1:len(config.people)]:             # A is for days, so skip it 
+            if ascii_uppercase.index(char) == len(config.people) - 1:  # Last person, must be without AND
                 ret += 'Len(' + char + str(row_num) + ')=0'                 # Check if the single last cell is empty
             else:
                 ret += 'AND(Len(' + char + str(row_num) + ')=0, '           # Check if the cell is empty and leave room for the next one
 
-        ret += (len(definitions.people) - 2) * ')' + end                    # Close all the ANDs and add the end of the statement
+        ret += (len(config.people) - 2) * ')' + end                    # Close all the ANDs and add the end of the statement
 
         return ret
         
@@ -84,8 +84,8 @@ class ExcelGen:
             '''
                 Fill the people names into the first row
             '''
-            for i in range(1, len(definitions.people) + 1):
-                worksheet.write(0, i, definitions.people[i-1], self.fmt_names)
+            for i in range(1, len(config.people) + 1):
+                worksheet.write(0, i, config.people[i-1], self.fmt_names)
     
         def get_format(type, format_row):
             '''
@@ -93,9 +93,9 @@ class ExcelGen:
             '''
             ret = self.fmt_no_format
         
-            if type == definitions.REHEARSAL:
+            if type == config.REHEARSAL:
                 ret = self.fmt_rehearsals
-            elif type == definitions.WEEKEND:
+            elif type == config.WEEKEND:
                 ret = self.fmt_weekends
             else:
                 # alternating between styles for better orientation
@@ -125,10 +125,10 @@ class ExcelGen:
 
             # writing the day info
             worksheet.write(curr_row, 0, day + ' ' + str(number) + '.', curr_format)    # write day and date into the first column
-            worksheet.write(curr_row, len(definitions.people), self.prepare_if_statement(curr_row + 1), curr_format)  # write command statement into the last column
+            worksheet.write(curr_row, len(config.people), self.prepare_if_statement(curr_row + 1), curr_format)  # write command statement into the last column
 
             # filling the rest of the row with empty data to apply the format
-            for i in range(1, len(definitions.people)):
+            for i in range(1, len(config.people)):
                 worksheet.write(curr_row, i, '', curr_format)
         
             curr_row += 1
