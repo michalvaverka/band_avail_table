@@ -3,6 +3,12 @@ from calendar_generator import CalendarGen
 from excel_generator import ExcelGen
 import definitions
 
+'''
+    Move all definitions, rename to configuration
+    Use some calendar algorithm (starting day of week, leap years...)
+    perhaps switch to alternative excel AND syntax
+    Add comments
+'''
 if __name__ == '__main__':
     
     START_DAY = 17
