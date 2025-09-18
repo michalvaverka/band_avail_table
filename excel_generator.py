@@ -61,7 +61,7 @@ class ExcelGen:
 
         # Start and end of the IF statement
         ret = '=IF('
-        end = ', "MOŽME", "Nemožme :(")'
+        end = ', "MOŽME", "Nemožme :(")' # Take this out to the configuration !!! 
         
         for char in ascii_uppercase[1:len(config.people)]:             # A is for days, so skip it 
             if ascii_uppercase.index(char) == len(config.people) - 1:  # Last person, must be without AND

@@ -4,32 +4,42 @@ class CalendarGen:
     def __init__(self):
         self.fetch_iter_day = config.weekdays.index(config.START_DAY_OF_WEEK) # For iteration in fetch_weekday()
 
-    # Returns day of the week using generator => Starting Monday and is in Czech
-    def fetch_weekday(self):
-        while(True):
-            curr_day = config.weekdays[self.fetch_iter_day]
-        
-            if self.fetch_iter_day == 1:
-                yield (config.REHEARSAL, curr_day)
-            elif self.fetch_iter_day == 5 or self.fetch_iter_day == 6:
-                yield (config.WEEKEND, curr_day)
-            else:
-                yield (config.OTHER, curr_day) 
-
-            # Increase index, wrap around on the end of the week
+    def fetch_weekday(self): 
+        '''
+            Generator yielding tuples of (type, day) for each day of the week.
+            Type is used for formatting, day is used to name the day.    
+        '''
+        def update_iter_day(self):
+            '''
+                Updates the day iterator, wraps around.
+                It is respective to the days of week.
+            '''
             self.fetch_iter_day += 1
             if self.fetch_iter_day >= 7:
                 self.fetch_iter_day = 0
+        
+        # fetch_weekday body here
+        while(True):
+            match self.fetch_iter_day:
+                # Commented out the hardcoded rehearsal day, so it is generally usable
+                # case 1:
+                #    yield (config.REHEARSAL, config.weekdays[self.fetch_iter_day])
+                case 5 | 6:
+                    yield (config.WEEKEND, config.weekdays[self.fetch_iter_day])
+                case _:
+                    yield (config.OTHER, config.weekdays[self.fetch_iter_day]) 
+            
+            update_iter_day(self)
 
-    
-    # Generate a list of tuples (type, day, date) for a single month
-    def generate_month(self, month):
+    def generate_month(self, month, day):
+        '''
+            Wrapper function, produces a list of tuples (type, day, date) for each day in the given month.
+            Type is used for formatting, day is used to name the day, date is the number of the day in the month.
+        '''
+
         ret = []
-
         month_idx = month - 1
-
         month_len = config.month_lengths[month_idx]
-        day = config.START_DAY
 
         for type, weekday in self.fetch_weekday():
             if day > month_len:
@@ -41,12 +51,15 @@ class CalendarGen:
 
         return ret
 
-    # Wrapper for all months generation
     def generate_days(self) -> list[list[str]]:
+        '''
+            Wrapper, that generates all months from START_MONTH to December, with each month being a list of tuples (type, day, date).
+        '''
         ret = []
-
+        start_day = config.START_DAY # Starting day of the first month
+        
         for month_idx in range(config.START_MONTH, 13):
-            ret.append(self.generate_month(month_idx)) # First start_day differs, then it always begins on one
-            self.start_day = 1
+            ret.append(self.generate_month(month_idx, start_day))
+            start_day = 1
 
         return ret

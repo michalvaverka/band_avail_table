@@ -8,7 +8,6 @@ import config
 '''
     Use some calendar algorithm (starting day of week, leap years...)
     perhaps switch to alternative excel AND syntax
-    Add comments
 '''
 class AvailabilityTable:
     def __init__(self):
