@@ -5,9 +5,9 @@
 
     Date and the name of the day of the week must match.
 '''
-START_DAY = 17              # !!! MAKE OPTIONAL !!!
-START_MONTH = 9
-START_DAY_OF_WEEK = "Středa" # !!! OPTIMIZE OUT !!!
+START_DAY = 1              # !!! MAKE OPTIONAL !!!
+START_MONTH = 1
+START_DAY_OF_WEEK = "Čtvrtek" # !!! OPTIMIZE OUT !!!
 
 '''
     Output filename
@@ -37,7 +37,7 @@ month_lengths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 '''
     People who will take part in the scheduling
 '''
-people = ["Evča", "Mari", "Michal", "Péťa", "Štěpán", "Všichni"]
+people = ["Jerry", "Martin", "Matěj", "Michal", "Patrik", "Petr", "Všichni"]
 
 # ============================ Various config ================================ #
 '''
