@@ -1,8 +1,9 @@
 import config
+from config_perm import (month_names, weekdays)
 
 class CalendarGen:
     def __init__(self):
-        self.fetch_iter_day = config.weekdays.index(config.START_DAY_OF_WEEK) # For iteration in fetch_weekday()
+        self.fetch_iter_day = weekdays.index(config.START_DAY_OF_WEEK) # For iteration in fetch_weekday()
 
     def fetch_weekday(self): 
         '''
@@ -23,11 +24,11 @@ class CalendarGen:
             match self.fetch_iter_day:
                 # Commented out the hardcoded rehearsal day, so it is generally usable
                 # case 1:
-                #    yield (config.REHEARSAL, config.weekdays[self.fetch_iter_day])
+                #    yield (config.REHEARSAL, weekdays[self.fetch_iter_day])
                 case 5 | 6:
-                    yield (config.WEEKEND, config.weekdays[self.fetch_iter_day])
+                    yield (config.WEEKEND, weekdays[self.fetch_iter_day])
                 case _:
-                    yield (config.OTHER, config.weekdays[self.fetch_iter_day]) 
+                    yield (config.OTHER, weekdays[self.fetch_iter_day]) 
             
             update_iter_day(self)
 
